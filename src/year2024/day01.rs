@@ -33,6 +33,6 @@ pub fn part2(input: &Input) -> u32 {
     input
         .0
         .iter()
-        .map(|num| num * freq.get(&num).or(Some(&0)).unwrap())
+        .filter_map(|num| freq.get(num).map(|count| count * num))
         .sum()
 }
