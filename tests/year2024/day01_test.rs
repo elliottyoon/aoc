@@ -1,4 +1,4 @@
-use aoc::year2024::day01::{parse, part1};
+use aoc::year2024::day01::{parse, part1, part2};
 
 const EXAMPLE_INPUT: &str = "\
 3   4
@@ -9,9 +9,6 @@ const EXAMPLE_INPUT: &str = "\
 3   3
 ";
 
-const EXAMPLE_INPUT_2: &str = "
-";
-
 #[test]
 fn part1_test() {
     let input = parse(EXAMPLE_INPUT);
@@ -20,5 +17,6 @@ fn part1_test() {
 
 #[test]
 fn part2_test() {
-    todo!();
+    let input = parse(EXAMPLE_INPUT);
+    assert_eq!(part2(&input), 31);
 }
