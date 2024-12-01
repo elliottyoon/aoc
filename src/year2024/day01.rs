@@ -1,38 +1,20 @@
-use std::collections::BinaryHeap;
+use crate::util::iter::ChunkOps;
+use crate::util::parse::ParseOps;
 
-type Input = Vec<(u32, u32)>;
+type Input = (Vec<u32>, Vec<u32>);
 
 pub fn parse(input: &str) -> Input {
-    input
-        .lines()
-        .filter_map(|line| {
-            let mut parts = line.split_whitespace();
-            let first = parts.next()?.parse::<u32>().ok()?;
-            let second = parts.next()?.parse::<u32>().ok()?;
-            Some((first, second))
-        })
-        .collect()
+    input.iter_unsigned::<u32>().chunk::<2>().map(|[l, r]| (l, r)).unzip()
 }
 
 pub fn part1(input: &Input) -> u32 {
-    // split input into two sorted vectors, and then just iterate through them
-    let mut first = BinaryHeap::with_capacity(input.len());
-    let mut second = BinaryHeap::with_capacity(input.len());
+    let mut left = input.0.clone();
+    left.sort_unstable();
 
-    for (f, s) in input.into_iter() {
-        first.push(f);
-        second.push(s);
-    }
-    debug_assert_eq!(first.len(), second.len());
-    let mut total = 0;
-    for i in 0..first.len() {
-        if let Some(f) = first.pop() {
-            if let Some(s) = second.pop() {
-                total += u32::abs_diff(*f, *s);
-            }
-        }
-    }
-    total
+    let mut right = input.1.clone();
+    right.sort_unstable();
+
+    left.into_iter().zip(right).map(|(l, r)| l.abs_diff(r)).sum()
 }
 
 pub fn part2(_input: &Input) -> u32 {

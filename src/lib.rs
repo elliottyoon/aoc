@@ -6,6 +6,7 @@
 pub mod util {
     pub mod ansi;
     pub mod integer;
+    pub mod iter;
     pub mod parse;
 }
 

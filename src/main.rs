@@ -1,5 +1,4 @@
 use aoc::util::ansi::*;
-use aoc::util::parse::*;
 use aoc::*;
 
 use aoc::util::parse::ParseOps;
