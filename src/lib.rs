@@ -5,6 +5,7 @@
 /// (All credit to https://github.com/maneatingape/advent-of-code-rust)
 pub mod util {
     pub mod ansi;
+    pub mod hash;
     pub mod integer;
     pub mod iter;
     pub mod parse;
