@@ -1,5 +1,6 @@
 use crate::util::iter::ChunkOps;
 use crate::util::parse::ParseOps;
+use std::collections::HashMap;
 
 type Input = (Vec<u32>, Vec<u32>);
 
@@ -23,6 +24,15 @@ pub fn part1(input: &Input) -> u32 {
         .sum()
 }
 
-pub fn part2(_input: &Input) -> u32 {
-    42
+pub fn part2(input: &Input) -> u32 {
+    let freq = input.1.iter().fold(HashMap::new(), |mut acc, &r| {
+        *acc.entry(r).or_insert_with(|| 0) += 1;
+        acc
+    });
+
+    input
+        .0
+        .iter()
+        .map(|num| num * freq.get(&num).or(Some(&0)).unwrap())
+        .sum()
 }
