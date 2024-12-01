@@ -1,5 +1,3 @@
-//! (All credit to https://github.com/maneatingape/advent-of-code-rust)
-//!
 //! Combines common [operators](https://doc.rust-lang.org/book/appendix-02-operators.html)
 //! and constants `0`, `1` and `10` to enable generic methods on integer types.
 use std::ops::*;

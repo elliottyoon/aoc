@@ -1,4 +1,4 @@
-use aoc::year2024::day01;
+// use aoc::year2024::day01;
 
 #[test]
 fn part1_test() {

@@ -1,7 +1,10 @@
 //! # Advent of Code solutions in Rust, hopefully.
 
 /// # Utility modules to handle common recurring Advent of Code pattern
+///
+/// (All credit to https://github.com/maneatingape/advent-of-code-rust)
 pub mod util {
+    pub mod ansi;
     pub mod integer;
     pub mod parse;
 }

@@ -1,5 +1,3 @@
-//! (All credit to https://github.com/maneatingape/advent-of-code-rust)
-//!
 //! Extracts and parses signed and unsigned integers from surrounding text and whitespace.
 //!
 //! A common pattern in Advent of Code is to parse and return `123`, `456` and `789` from input
