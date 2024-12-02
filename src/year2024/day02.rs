@@ -7,24 +7,23 @@ pub fn parse(input: &str) -> Input {
     let mut part2 = 0;
 
     let mut row = Vec::new();
-    input.lines()
-        .for_each(|line| {
-            row.extend(line.iter_unsigned::<u32>());
-            if is_safe(&row) {
-                part1 += 1;
-                part2 += 1;
-            } else {
-                for i in 0..row.len() {
-                    let level = row.remove(i);
-                    if is_safe(&row) {
-                        part2 += 1;
-                        break;
-                    }
-                    row.insert(i, level);
+    input.lines().for_each(|line| {
+        row.extend(line.iter_unsigned::<u32>());
+        if is_safe(&row) {
+            part1 += 1;
+            part2 += 1;
+        } else {
+            for i in 0..row.len() {
+                let level = row.remove(i);
+                if is_safe(&row) {
+                    part2 += 1;
+                    break;
                 }
+                row.insert(i, level);
             }
-            row.clear()
-        });
+        }
+        row.clear()
+    });
 
     (part1, part2)
 }
@@ -51,5 +50,5 @@ fn is_safe(report: &[u32]) -> bool {
         }
     }
 
-    (increasing ^ decreasing)
+    increasing ^ decreasing
 }
