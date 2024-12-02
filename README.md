@@ -1,3 +1,10 @@
+## About
+
+Solutions to the Advent of Code problems written in Rust and tuned for performance.
+
+"Extremely fast" is a wild
+overstatement&mdash;but regardless, it's the goal.
+
 ## Performance
 
 Benchmarks are measured using the built-in `cargo bench` tool run on
