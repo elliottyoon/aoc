@@ -14,7 +14,23 @@ pub fn part1(input: &[Vec<i32>]) -> usize {
 }
 
 pub fn part2(input: &[Vec<i32>]) -> usize {
-    0
+    input
+        .iter()
+        .filter(|row| {
+            for i in 0..row.len() {
+                let new_row = row
+                    .iter()
+                    .enumerate()
+                    .filter(|(idx, _)| *idx != i)
+                    .map(|(_, v)| *v)
+                    .collect::<Vec<_>>();
+                if is_safe(&new_row) {
+                    return true;
+                }
+            }
+            false
+        })
+        .count()
 }
 
 fn is_increasing(arr: &[i32]) -> bool {
