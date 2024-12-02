@@ -1,59 +1,55 @@
-pub fn parse(input: &str) -> Vec<Vec<i32>> {
-    input
-        .lines()
-        .map(|l| {
-            l.split_whitespace()
-                .map(|word| word.parse::<i32>().unwrap())
-                .collect::<Vec<_>>()
-        })
-        .collect::<Vec<_>>()
-}
+use crate::util::parse::ParseOps;
 
-pub fn part1(input: &[Vec<i32>]) -> usize {
-    input.iter().filter(|row| is_safe(row)).count()
-}
+type Input = (u32, u32);
 
-pub fn part2(input: &[Vec<i32>]) -> usize {
-    input
-        .iter()
-        .filter(|row| {
-            for i in 0..row.len() {
-                let new_row = row
-                    .iter()
-                    .enumerate()
-                    .filter(|(idx, _)| *idx != i)
-                    .map(|(_, v)| *v)
-                    .collect::<Vec<_>>();
-                if is_safe(&new_row) {
-                    return true;
+pub fn parse(input: &str) -> Input {
+    let mut part1 = 0;
+    let mut part2 = 0;
+
+    let mut row = Vec::new();
+    input.lines()
+        .for_each(|line| {
+            row.extend(line.iter_unsigned::<u32>());
+            if is_safe(&row) {
+                part1 += 1;
+                part2 += 1;
+            } else {
+                for i in 0..row.len() {
+                    let level = row.remove(i);
+                    if is_safe(&row) {
+                        part2 += 1;
+                        break;
+                    }
+                    row.insert(i, level);
                 }
             }
-            false
-        })
-        .count()
+            row.clear()
+        });
+
+    (part1, part2)
 }
 
-fn is_increasing(arr: &[i32]) -> bool {
-    arr.windows(2).all(|w| w[0] <= w[1])
+pub fn part1(input: &Input) -> u32 {
+    input.0
 }
 
-fn is_decreasing(arr: &[i32]) -> bool {
-    arr.windows(2).all(|w| w[0] >= w[1])
+pub fn part2(input: &Input) -> u32 {
+    input.1
 }
 
-fn is_safe(report: &[i32]) -> bool {
-    // always increasing or decreasing
-    if !(is_increasing(report) || is_decreasing(report)) {
-        return false;
-    }
+fn is_safe(report: &[u32]) -> bool {
+    let mut increasing = true;
+    let mut decreasing = true;
 
-    for i in 0..report.len() - 1 {
-        let dist = report[i].abs_diff(report[i + 1]);
-        if dist < 1 || dist > 3 {
+    for window in report.windows(2) {
+        increasing &= window[0] < window[1];
+        decreasing &= window[0] > window[1];
+        // Each pair of adjacent levels must be x distance from each other,
+        // where 1 <= x <= 3.
+        if !(1..=3).contains(&window[0].abs_diff(window[1])) {
             return false;
         }
     }
-    true
 
-    // AND adjacent levels differ by at least one and at most three.
+    (increasing ^ decreasing)
 }
