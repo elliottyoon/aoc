@@ -14,4 +14,5 @@ pub mod util {
 /// # pls why did i agree to do this D:
 pub mod year2024 {
     pub mod day01;
+    pub mod day02;
 }
