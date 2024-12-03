@@ -1,38 +1,72 @@
-use regex::Regex;
+type Input = (u32, u32);
 
-type Input = Vec<(bool, u32, u32)>;
 pub fn parse(input: &str) -> Input {
-    let mul_regex = Regex::new(r"^(\d+),(\d+)\)").unwrap();
-    let mut skipped = false;
-    let mut next_skipped = false;
+    let (mut part1, mut part2) = (0, 0);
+    let mut is_enabled = true;
 
-    input
-        .split("mul(")
-        .filter_map(|split| {
-            skipped = next_skipped;
-            match (split.find("don't()"), split.find("do()")) {
-                (Some(dont_idx), Some(do_idx)) => {
-                    next_skipped = dont_idx > do_idx;
-                }
-                (Some(_), None) => next_skipped = true,
-                (None, Some(_)) => next_skipped = false,
-                _ => {}
+    let mut index = 0;
+    let input = input.as_bytes();
+
+    while index < input.len() {
+        // We only care about "mul(x,y)", "do()" and "don't()" tokens.
+        // Everything else is garbage.
+        if input[index] != b'm' && input[index] != b'd' {
+            index += 1;
+            continue;
+        }
+
+        if input[index..].starts_with(b"mul(") {
+            index += 4;
+
+            // first number
+            let mut first = 0;
+            while input[index].is_ascii_digit() {
+                first = 10 * first + (input[index] - b'0') as u32;
+                index += 1;
             }
 
-            mul_regex
-                .captures(split)
-                .map(|nums| (skipped, nums[1].parse().unwrap(), nums[2].parse().unwrap()))
-        })
-        .collect::<Vec<_>>()
+            // ',' delimeter
+            if input[index] != b',' {
+                continue;
+            }
+            index += 1;
+
+            // second number
+            let mut second = 0;
+            while input[index].is_ascii_digit() {
+                second = 10 * second + (input[index] - b'0') as u32;
+                index += 1;
+            }
+
+            // ')' delimeter
+            if input[index] != b')' {
+                continue;
+            }
+            index += 1;
+
+            let product = first * second;
+            part1 += product;
+            if is_enabled {
+                part2 += product
+            }
+        } else if input[index..].starts_with(b"do()") {
+            index += 4;
+            is_enabled = true;
+        } else if input[index..].starts_with(b"don't()") {
+            index += 7;
+            is_enabled = false;
+        } else {
+            index += 1;
+        }
+    }
+
+    (part1, part2)
 }
 
 pub fn part1(input: &Input) -> u32 {
-    input.iter().map(|(_, a, b)| a * b).sum()
+    input.0
 }
 
 pub fn part2(input: &Input) -> u32 {
-    input
-        .iter()
-        .filter_map(|(skipped, a, b)| if *skipped { None } else { Some(a * b) })
-        .sum()
+    input.1
 }

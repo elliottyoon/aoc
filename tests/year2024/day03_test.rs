@@ -14,6 +14,5 @@ fn part1_test() {
 #[test]
 fn part2_test() {
     let input = parse(EXAMPLE_INPUT_2);
-    println!("{:?}", EXAMPLE_INPUT_2);
     assert_eq!(part2(&input), 48);
 }
