@@ -10,7 +10,7 @@ const DIRS: [(i32, i32); 8] = [
     (-1, 1),
     (-1, -1),
 ];
-const XMAS: [char; 4] = ['X', 'M', 'A', 'S'];
+const XMAS: [char; 3] = ['M', 'A', 'S'];
 
 pub fn parse(input: &str) -> Input {
     input
@@ -26,7 +26,7 @@ pub fn part1(input: &Input) -> usize {
         for c in 0..input[0].len() {
             if input[r][c] == 'X' {
                 for dir in DIRS {
-                    if dfs(input, 0, (r as i32, c as i32), dir) {
+                    if dfs(input, 0, (dir.0 + r as i32, dir.1 + c as i32), dir) {
                         res += 1;
                     }
                 }
@@ -37,7 +37,7 @@ pub fn part1(input: &Input) -> usize {
 }
 
 fn dfs(input: &Input, char_index: usize, (i, j): (i32, i32), dir: (i32, i32)) -> bool {
-    if char_index == 4 {
+    if char_index == 3 {
         return true;
     }
     if i < 0
