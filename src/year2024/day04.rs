@@ -20,13 +20,10 @@ pub fn parse(input: &str) -> Input {
 }
 
 pub fn part1(input: &Input) -> usize {
-    let ROWS = input.len();
-    let COLS = input[0].len();
-
     let mut res = 0;
 
-    for r in 0..ROWS {
-        for c in 0..COLS {
+    for r in 0..input.len() {
+        for c in 0..input[0].len() {
             if input[r][c] == 'X' {
                 for dir in DIRS {
                     if dfs(input, 0, (r as i32, c as i32), dir) {
@@ -43,9 +40,11 @@ fn dfs(input: &Input, char_index: usize, (i, j): (i32, i32), dir: (i32, i32)) ->
     if char_index == 4 {
         return true;
     }
-    let ROWS = input.len() as i32;
-    let COLS = input[0].len() as i32;
-    if i < 0 || j < 0 || i >= ROWS || j >= COLS || input[i as usize][j as usize] != XMAS[char_index]
+    if i < 0
+        || j < 0
+        || i >= input.len() as i32
+        || j >= input[0].len() as i32
+        || input[i as usize][j as usize] != XMAS[char_index]
     {
         return false;
     }
@@ -53,12 +52,9 @@ fn dfs(input: &Input, char_index: usize, (i, j): (i32, i32), dir: (i32, i32)) ->
 }
 
 pub fn part2(input: &Input) -> usize {
-    let ROWS = input.len();
-    let COLS = input[0].len();
     let mut res = 0;
-
-    for r in 1..ROWS - 1 {
-        for c in 1..COLS - 1 {
+    for r in 1..input.len() - 1 {
+        for c in 1..input[0].len() - 1 {
             if input[r][c] == 'A' && check_x(input, r, c) {
                 res += 1;
             }
@@ -76,7 +72,6 @@ fn check_x(input: &Input, i: usize, j: usize) -> bool {
             ('M', 'S') | ('S', 'M') => {}
             _ => return false,
         }
-        // check that M on one side and A on the other
     }
     true
 }
