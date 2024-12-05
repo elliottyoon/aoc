@@ -22,3 +22,4 @@ an Apple M4 Pro with 24 GB of RAM.
 | 2   | [Red-Nosed Reports](https://adventofcode.com/2024/day/2)  | [Source](src/year2024/day02.rs) |             39 |
 | 3   | [Mull It Over](https://adventofcode.com/2024/day/3)       | [Source](src/year2024/day03.rs) |              5 |
 | 4   | [Ceres Search](https://adventofcode.com/2024/day/4)       | [Source](src/year2024/day04.rs) |             82 |
+| 5   | [Print Queue](https://adventofcode.com/2024/day/5)        | [Source](src/year2024/day05.rs) |            785 |
