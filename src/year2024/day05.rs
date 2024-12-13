@@ -89,10 +89,8 @@ pub fn parse(input: &str) -> Input {
                     good_nums.insert(i, num);
                     break;
                 }
-                println!("num: {}, {:?}", num, good_nums);
             }
             let middle = good_nums[nums.len() / 2];
-            println!("{}", middle);
             part2.push(middle);
         }
     }
